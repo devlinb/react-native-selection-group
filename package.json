@@ -1,0 +1,35 @@
+{
+  "name": "react-native-selection-group",
+  "version": "1.0.0",
+  "description": "Groups react native components together for selection purposes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devlinb/react-native-selection-group.git"
+  },
+  "keywords": [
+    "React",
+    "Native",
+    "RN",
+    "Selection",
+    "Radio",
+    "Button",
+    "Radio",
+    "Group",
+    "ReactNative",
+    "SelectionGroup",
+    "Selection",
+    "Group",
+    "Button",
+    "Group"
+  ],
+  "author": "devlinb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devlinb/react-native-selection-group/issues"
+  },
+  "homepage": "https://github.com/devlinb/react-native-selection-group#readme"
+}
