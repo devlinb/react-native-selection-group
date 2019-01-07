@@ -9,8 +9,10 @@ const SelectionGroup = props => {
     const {
         items,
         onPress,
-        selectedIndex,
+        isSelected,
         containerStyle,
+        renderContent,
+        selectionHandler,
         ...attributes
     } = props;
 
@@ -22,26 +24,53 @@ const SelectionGroup = props => {
      */
     return (
         <View
-            style={[{}, containerStyle && containerStyle]}    
+            style={[{}, containerStyle && containerStyle]}
             {...attributes}
         >
             {items.map((item, i) => {
                 return (
-                    item(
+                    renderContent(
+                        item,
                         i,
-                        selectedIndex === i,
-                        onPress ? () => onPress(i) : () => { }
+                        isSelected(i),
+                        onPress(selectionHandler)
                     ));
             })}
         </View>
     );
 };
 
+export class SelectionHandler {
+    constructor(maxMultiSelect) {
+        this.selectedOption = null;
+        this.maxSelected = maxMultiSelect || 1;
+    }
+
+    selectionHandler(index) {
+        if (this.maxSelected === 1) {
+            this.selectedOption = index;
+        } else if (this.selectionOption) {
+            this.selectionOption.push(index);
+            if (this.selectionOption.length >= this.maxSelected) this.selectedOption.shift();
+        } else {
+            this.selectionOption = [index];
+        }
+    }
+
+    isSelected(index) {
+        if (!this.selectedOption) return false;
+        if (typeof this.selectedOption === 'number') return index === this.selectedOption;
+        return this.selectedOption.includes(index);
+    }
+}
+
 SelectionGroup.propTypes = {
     items: PropTypes.arrayOf(PropTypes.func).isRequired,
     onPress: PropTypes.func.isRequired,
-    selectedIndex: PropTypes.number,
+    isSelected: PropTypes.func.isRequired,
     containerStyle: ViewPropTypes.style,
+    renderContent: PropTypes.func.isRequired,
+    selectionHandler: PropTypes.func.isRequired,
     attributes: PropTypes.any
 };
 
