@@ -5,48 +5,57 @@ import {
     ViewPropTypes
 } from 'react-native';
 
-const SelectionGroup = props => {
-    const {
-        items,
-        onPress,
-        isSelected,
-        containerStyle,
-        renderContent,
-        selectionHandler,
-        ...attributes
-    } = props;
+export default class SelectionGroup extends React.Component {
 
-    /* Each function in the items array is called, we pass in its index, if it is selected, and  
-     * finally we capture the index 'i' and wrap it in a lambda that will hand it off to the onPress function passed in
-     * by our parent component. 
-     * 
-     * The lambda capture is the only smart thing this component does.
-     */
-    return (
-        <View
-            style={[{}, containerStyle && containerStyle]}
-            {...attributes}
-        >
-            {items.map((item, i) => {
-                return (
+    // const {
+    //     items,
+    //     onPress,
+    //     isSelected,
+    //     containerStyle,
+    //     renderContent,
+    //     ...attributes
+    // } = props;
+
+    render() {
+        const {
+            items,
+            onPress,
+            isSelected,
+            containerStyle,
+            renderContent,
+            ...attributes
+        } = this.props;
+        /* Each function in the items array is called, we pass in its index, if it is selected, and  
+         * finally we capture the index 'i' and wrap it in a lambda that will hand it off to the onPress function passed in
+         * by our parent component. 
+         * 
+         * The lambda capture is the only smart thing this component does.
+         */
+        return (
+            <View
+                style={[{}, containerStyle && containerStyle]}
+                {...attributes}
+            >
+                {items.map((item, i) =>
                     renderContent(
                         item,
                         i,
                         isSelected(i),
-                        onPress(selectionHandler)
-                    ));
-            })}
-        </View>
-    );
-};
+                        () => { this.forceUpdate(); onPress(i); }
+                    )
+                )}
+            </View>
+        );
+    }
+}
 
 export class SelectionHandler {
-    constructor(maxMultiSelect) {
+    constructor(maxMultiSelect = 1) {
         this.selectedOption = null;
-        this.maxSelected = maxMultiSelect || 1;
+        this.maxSelected = maxMultiSelect;
     }
 
-    selectionHandler(index) {
+    selectionHandler = (index) => {
         if (this.maxSelected === 1) {
             this.selectedOption = index;
         } else if (this.selectionOption) {
@@ -57,21 +66,18 @@ export class SelectionHandler {
         }
     }
 
-    isSelected(index) {
-        if (!this.selectedOption) return false;
+    isSelected = (index) => {
+        if (this.selectedOption === null) return false;
         if (typeof this.selectedOption === 'number') return index === this.selectedOption;
         return this.selectedOption.includes(index);
     }
 }
 
 SelectionGroup.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.func).isRequired,
+    items: PropTypes.array.isRequired,
     onPress: PropTypes.func.isRequired,
     isSelected: PropTypes.func.isRequired,
     containerStyle: ViewPropTypes.style,
     renderContent: PropTypes.func.isRequired,
-    selectionHandler: PropTypes.func.isRequired,
     attributes: PropTypes.any
 };
-
-export default SelectionGroup;
