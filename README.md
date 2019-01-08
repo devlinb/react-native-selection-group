@@ -6,6 +6,10 @@ The main benefit of this component is that it doesn't dictate to you how your UI
 
 Check out the ExampleApp for more info.
 
+Todo: More examples, more documentation.
+
+Returning all selected items for the multi-selected case would be nice.
+
 ![Survey Questions](https://i.imgur.com/I1qx6Pg.png)
 
 ---
