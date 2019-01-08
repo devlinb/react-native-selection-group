@@ -6,7 +6,7 @@ The main benefit of this component is that it doesn't dictate to you how your UI
 
 Check out the ExampleApp for more info.
 
-![Survey Questions](https://i.imgur.com/I1qx6Pg.png | width=100)
+![Survey Questions](https://i.imgur.com/I1qx6Pg.png)
 
 ---
 
