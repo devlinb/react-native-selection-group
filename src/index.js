@@ -5,17 +5,20 @@ import {
     ViewPropTypes
 } from 'react-native';
 
+/**
+ * The only real strict requirement is that 'items' is an array of objects all of which have a field 
+ * called 'optionText'.
+ * 
+ * onPress should probably be Selectionhandler.selectionHandler, same for isSelected. 
+ * 
+ * If you are using SelectionHandler, it is important that if you change the *items* prop, you hand 
+ * over a *new instance* of SelectionHandler. See the ExampleApp for how to do this. Each group of 
+ * questions can get its own SelectionHandler, just put everything in parallel arrays. 
+ * 
+ * Better yet just use the upcoming react-native-survey component that'll handle all of this for you.
+ * 
+ */
 export default class SelectionGroup extends React.Component {
-
-    // const {
-    //     items,
-    //     onPress,
-    //     isSelected,
-    //     containerStyle,
-    //     renderContent,
-    //     ...attributes
-    // } = props;
-
     render() {
         const {
             items,
@@ -23,13 +26,14 @@ export default class SelectionGroup extends React.Component {
             isSelected,
             containerStyle,
             renderContent,
+            onItemSelected,
             ...attributes
         } = this.props;
-        /* Each function in the items array is called, we pass in its index, if it is selected, and  
-         * finally we capture the index 'i' and wrap it in a lambda that will hand it off to the onPress function passed in
-         * by our parent component. 
-         * 
-         * The lambda capture is the only smart thing this component does.
+        
+        /**
+         * forceUpdate is called below to ensure a re-render happens, in case for whatever reason 
+         * the client of this component doesn't take any action that forces a redraw.
+         * This is actually super inefficent code, all elements are redrawn when any single element is touched.
          */
         return (
             <View
@@ -41,7 +45,7 @@ export default class SelectionGroup extends React.Component {
                         item,
                         i,
                         isSelected(i),
-                        () => { this.forceUpdate(); onPress(i); }
+                        () => { this.forceUpdate(); if (onItemSelected) onItemSelected(item); onPress(i); }
                     )
                 )}
             </View>
@@ -64,6 +68,7 @@ export class SelectionHandler {
         } else {
             this.selectionOption = [index];
         }
+        
     }
 
     isSelected = (index) => {
@@ -79,5 +84,6 @@ SelectionGroup.propTypes = {
     isSelected: PropTypes.func.isRequired,
     containerStyle: ViewPropTypes.style,
     renderContent: PropTypes.func.isRequired,
+    onItemSelected: PropTypes.func,
     attributes: PropTypes.any
 };
