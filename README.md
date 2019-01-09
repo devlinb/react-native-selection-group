@@ -24,6 +24,7 @@ Check out the ExampleApp for more info.
 ``SelectionGroup`` has only a few props you need to worry about, and if you aren't customizing the component, you can just copy paste the code below, put your own style in ``containerStyle`` and pass in your array of choices to ``items`` and everything will work out for you. ``selectionHandler`` below is a new'd instance of ``SelectionHandler``.
 
 ```
+const arrayOfChoices = ['First option', 'Second option', 'Third option']
 <SelectionGroup 
   renderContent={this.renderButton}
   items={arrayOfChoices}
@@ -38,6 +39,8 @@ onItemSelected is called whenever the user's selection changes. You probably wan
 
 ## Advanced Usage
 Multi-select support also exists. See [MultiselectScreen.js](https://github.com/devlinb/react-native-selection-group/blob/master/ExampleApp/screens/MultiselectScreen.js) for an example.
+
+The items array can be filled with complex objects. Your render function is called with the entire array element, you choose what to do with it, so go wild. The ExampleApp shows this off.
 
 ## Example App
 The example app is a vanilla RN project, download, run NPM install, then start it up as per usual. If you want to jump to the important code, look in the ``screens`` directory. ``SimpleScreen`` will get you up and started super quick and handle 90% of use cases. If you want to draw some simple Radio Buttons, grab the code from ``RadioButtonsScreen``, they aren't platform equivilent by any means, they are quick and dirty to show off what can be done. React Native Elements has super simple checkbox and radio buttons (radio buttons are under the Checkbox component) that do the job.
