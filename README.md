@@ -42,6 +42,8 @@ Multi-select support also exists. See [MultiselectScreen.js](https://github.com/
 
 The items array can be filled with complex objects. Your render function is called with the entire array element, you choose what to do with it, so go wild. The ExampleApp shows this off.
 
+You can use your own selection handlers, in case you want to do validation of the user's selections. The API for this is anemic right now, the selection handler needs to be passed the entire item to make it really useful.
+
 ## Example App
 The example app is a vanilla RN project, download, run NPM install, then start it up as per usual. If you want to jump to the important code, look in the ``screens`` directory. ``SimpleScreen`` will get you up and started super quick and handle 90% of use cases. If you want to draw some simple Radio Buttons, grab the code from ``RadioButtonsScreen``, they aren't platform equivilent by any means, they are quick and dirty to show off what can be done. React Native Elements has super simple checkbox and radio buttons (radio buttons are under the Checkbox component) that do the job.
 
