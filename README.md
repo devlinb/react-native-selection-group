@@ -31,7 +31,7 @@ const arrayOfChoices = ['First option', 'Second option', 'Third option']
   onPress={this.selectionHandler.selectionHandler}
   isSelected={this.selectionHandler.isSelected}
   containerStyle={styles.answers}
-  onItemSelected={(item) => this.setState({ selectedAnswer: item.value })}
+  onItemSelected={(item) => this.setState({ selectedAnswer: item })}
 />
 ```
 
