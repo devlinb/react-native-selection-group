@@ -84,7 +84,7 @@ export class SelectionHandler {
             this.selectedOption = index;
         } else if (this.selectedOption) {
             this.selectedOption.push(index);
-            if (this.selectedOption.length >= this.maxSelected) this.selectedOption.shift();
+            if (this.selectedOption.length > this.maxSelected) this.selectedOption.shift();
         } else {
             this.selectedOption = [index];
         }
