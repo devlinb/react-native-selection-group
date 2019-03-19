@@ -27,6 +27,7 @@ export default class SelectionGroup extends React.Component {
             containerStyle,
             renderContent,
             onItemSelected,
+            getAllSelectedItemIndexes,
             ...attributes
         } = this.props;
         
@@ -45,7 +46,22 @@ export default class SelectionGroup extends React.Component {
                         item,
                         i,
                         isSelected(i),
-                        () => { this.forceUpdate(); if (onItemSelected) onItemSelected(item); onPress(i); }
+                        () => {
+                            onPress(i); 
+                            this.forceUpdate(); 
+                            if (onItemSelected) { 
+                                const selectedItems = [];
+                                if (getAllSelectedItemIndexes) {
+                                    const selectedItemIndexes = getAllSelectedItemIndexes();
+                                    if (selectedItemIndexes != null) {
+                                        for (const index of selectedItemIndexes) {
+                                            selectedItems.push(items[index]);
+                                        }
+                                    }
+                                }
+                                onItemSelected(item, selectedItems); 
+                            }    
+                        }
                     )
                 )}
             </View>
@@ -55,8 +71,13 @@ export default class SelectionGroup extends React.Component {
 
 export class SelectionHandler {
     constructor(maxMultiSelect = 1) {
-        this.selectedOption = null;
+        this.selectedOption = null; // An array if maxSelected > 1
         this.maxSelected = maxMultiSelect;
+    }
+
+    getAllSelectedItemIndexes = () => {
+        console.log(`get all items: ${this.selectedOption}`);
+        return this.selectedOption;
     }
 
     selectionHandler = (index) => {
@@ -68,7 +89,6 @@ export class SelectionHandler {
         } else {
             this.selectedOption = [index];
         }
-        
     }
 
     isSelected = (index) => {
@@ -85,5 +105,6 @@ SelectionGroup.propTypes = {
     containerStyle: ViewPropTypes.style,
     renderContent: PropTypes.func.isRequired,
     onItemSelected: PropTypes.func,
+    getAllSelectedItemIndexes: PropTypes.func,
     attributes: PropTypes.any
 };

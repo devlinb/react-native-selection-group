@@ -62,14 +62,8 @@ export default class MultiselectScreen extends React.Component {
     }
 
     
-    onItemSelected = (item) => {
-        let {selectedItems} = this.state;
-        if (!selectedItems) selectedItems = [item];
-        else {
-            selectedItems.push(item);
-            if (selectedItems.length >= MAX_SELECT) selectedItems.shift();
-        }
-        this.setState({selectedItems: selectedItems});
+    onItemSelected = (item, allSelectedItems) => {
+        this.setState({ selectedItems: allSelectedItems });
     }
 
     /** 
@@ -102,8 +96,9 @@ export default class MultiselectScreen extends React.Component {
                         items={sampleQuestions.options}
                         onPress={this.selectionHandler.selectionHandler}
                         isSelected={this.selectionHandler.isSelected}
+                        getAllSelectedItemIndexes={this.selectionHandler.getAllSelectedItemIndexes}
                         containerStyle={styles.answers}
-                        onItemSelected={(item) => this.onItemSelected(item)}
+                        onItemSelected={(item, allSelectedItems) => this.onItemSelected(item, allSelectedItems)}
                     />
                     <Text style={styles.text}>
                         {this.state.selectedItems ? JSON.stringify(this.state.selectedItems) : 'Select something!'}

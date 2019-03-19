@@ -6,9 +6,12 @@ The main benefit of this component is that it doesn't dictate to you how your UI
 
 Check out the ExampleApp for more info.
 
+## What's New
+1.1 - New prop, getAllSelectedItemIndexes, if provided allows multi-selection will return all elements that are selected. You can pull in a default definition of getAllSelectedItemIndexes from SelectionHandler.
+
 ## Todo
 * More examples, more documentation. 
-* Returning all selected items for the multi-selected case would be nice.
+* ~~Returning all selected items for the multi-selected case would be nice.~~
 * Add typescript definitions.
 * Some crazy example showing off using the accelerometer for selecting a component.
 
