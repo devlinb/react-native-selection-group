@@ -76,7 +76,6 @@ export class SelectionHandler {
     }
 
     getAllSelectedItemIndexes = () => {
-        console.log(`get all items: ${this.selectedOption}`);
         return this.selectedOption;
     }
 
