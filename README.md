@@ -4,9 +4,11 @@ react-native-selection-group is the simplest way to create exclusive, or multi-s
 
 The main benefit of this component is that it doesn't dictate to you how your UI will be drawn, it handles all the state and calls a render function you provide.
 
-Check out the ExampleApp for more info.
+Check out the ExampleApp for more info, it shows all possible use cases, including how to use this component to work as a Radio Button.
 
 ## What's New
+1.2 - Deselection of an item is now possible, and is enabled by default. You can turn this behavior off by passing 'false' in as the second parameter to the SelectionHandler.
+
 1.1 - New prop, getAllSelectedItemIndexes, if provided multi-selection will return all elements that are selected. You can pull in a default definition of getAllSelectedItemIndexes from SelectionHandler.
 
 ## Todo
