@@ -80,7 +80,11 @@ export class SelectionHandler {
     }
 
     selectionHandler = (index) => {
-        if (this.maxSelected === 1) {
+        if (this.maxSelected === 1 && index === this.selectedOption) {
+            this.selectedOption = null;
+        } else if (this.maxSelected > 1 && this.selectedOption && this.selectedOption.includes(index)) {
+            this.selectedOption.splice(this.selectedOption.indexOf(index),1);
+        } else if (this.maxSelected === 1) {
             this.selectedOption = index;
         } else if (this.selectedOption) {
             this.selectedOption.push(index);
