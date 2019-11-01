@@ -19,6 +19,7 @@ import {
  * 
  */
 export default class SelectionGroup extends React.Component {
+
     render() {
         const {
             items,
@@ -70,9 +71,10 @@ export default class SelectionGroup extends React.Component {
 }
 
 export class SelectionHandler {
-    constructor(maxMultiSelect = 1) {
+    constructor(maxMultiSelect = 1, allowDeselect = true) {
         this.selectedOption = null; // An array if maxSelected > 1
         this.maxSelected = maxMultiSelect;
+        this.allowDeselect = allowDeselect;
     }
 
     getAllSelectedItemIndexes = () => {
@@ -80,10 +82,10 @@ export class SelectionHandler {
     }
 
     selectionHandler = (index) => {
-        if (this.maxSelected === 1 && index === this.selectedOption) {
+        if (this.maxSelected === 1 && index === this.selectedOption && this.allowDeselect) {
             this.selectedOption = null;
-        } else if (this.maxSelected > 1 && this.selectedOption && this.selectedOption.includes(index)) {
-            this.selectedOption.splice(this.selectedOption.indexOf(index),1);
+        } else if (this.maxSelected > 1 && this.selectedOption && this.selectedOption.includes(index) && this.allowDeselect) {
+            this.selectedOption.splice(this.selectedOption.indexOf(index), 1);
         } else if (this.maxSelected === 1) {
             this.selectedOption = index;
         } else if (this.selectedOption) {
