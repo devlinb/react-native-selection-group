@@ -85,10 +85,10 @@ export default class SelectionGroup extends React.Component {
 }
 
 export class SelectionHandler {
-    constructor(maxMultiSelect = 1, allowDeselect = true) {
-        this.selectedOption = null; // An array if maxSelected > 1
-        this.maxSelected = maxMultiSelect;
-        this.allowDeselect = allowDeselect;
+    constructor(options = { maxMultiSelect: 1, allowDeselect: true, defaultSelection: null }) {
+        this.selectedOption = options.defaultSelection !== undefined ? options.defaultSelection : null; // An array if maxSelected > 1
+        this.maxSelected = options.maxMultiSelect !== undefined ? options.maxMultiSelect : 1;
+        this.allowDeselect = options.allowDeselect !== undefined ? options.allowDeselect : true;
     }
 
     getAllSelectedItemIndexes = () => {
@@ -121,10 +121,10 @@ SelectionGroup.propTypes = {
     items: PropTypes.array.isRequired,
     onPress: PropTypes.func.isRequired,
     isSelected: PropTypes.func.isRequired,
+    isDeselected: PropTypes.func,
     containerStyle: ViewPropTypes.style,
     renderContent: PropTypes.func.isRequired,
     onItemSelected: PropTypes.func,
-    onItemDeselected: PropTypes.func,
     getAllSelectedItemIndexes: PropTypes.func,
     attributes: PropTypes.any
 };

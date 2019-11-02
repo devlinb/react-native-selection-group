@@ -55,7 +55,7 @@ export default class MultiselectScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.selectionHandler = new SelectionHandler(MAX_SELECT, true);
+        this.selectionHandler = new SelectionHandler({ maxMultiSelect: MAX_SELECT, allowDeselect: true, defaultSelection: null });
         this.state = {
             selectedItems: null
         };

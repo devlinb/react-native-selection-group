@@ -25,7 +25,7 @@ export default class SimpleScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.selectionHandler = new SelectionHandler(1);
+    this.selectionHandler = new SelectionHandler({ maxMultiSelect: 1 });
     this.state = {
       selectedAnswer: null
     };

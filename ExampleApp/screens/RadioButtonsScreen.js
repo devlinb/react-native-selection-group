@@ -24,7 +24,7 @@ const sampleQuestions = {
 export default class RadioButtonsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.selectionHandler = new SelectionHandler(1, false);
+    this.selectionHandler = new SelectionHandler({ maxMultiSelect: 1, allowDeselect: false, defaultSelection: 0 });
     this.state = {
       selectedAnswer: null
     };
