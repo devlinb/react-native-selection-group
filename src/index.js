@@ -29,6 +29,7 @@ export default class SelectionGroup extends React.Component {
             renderContent,
             onItemSelected,
             getAllSelectedItemIndexes,
+            onItemDeselected,
             ...attributes
         } = this.props;
         
@@ -49,8 +50,21 @@ export default class SelectionGroup extends React.Component {
                         isSelected(i),
                         () => {
                             onPress(i); 
-                            this.forceUpdate(); 
-                            if (onItemSelected) { 
+                            this.forceUpdate();
+                            if (isSelected(i)) {
+                                if (onItemSelected) { 
+                                    const selectedItems = [];
+                                    if (getAllSelectedItemIndexes) {
+                                        const selectedItemIndexes = getAllSelectedItemIndexes();
+                                        if (selectedItemIndexes != null) {
+                                            for (const index of selectedItemIndexes) {
+                                                selectedItems.push(items[index]);
+                                            }
+                                        }
+                                    }
+                                    onItemSelected(item, selectedItems); 
+                                }    
+                            } else if (onItemDeselected) { 
                                 const selectedItems = [];
                                 if (getAllSelectedItemIndexes) {
                                     const selectedItemIndexes = getAllSelectedItemIndexes();
@@ -60,7 +74,7 @@ export default class SelectionGroup extends React.Component {
                                         }
                                     }
                                 }
-                                onItemSelected(item, selectedItems); 
+                                onItemDeselected(item, selectedItems); 
                             }    
                         }
                     )
@@ -110,6 +124,7 @@ SelectionGroup.propTypes = {
     containerStyle: ViewPropTypes.style,
     renderContent: PropTypes.func.isRequired,
     onItemSelected: PropTypes.func,
+    onItemDeselected: PropTypes.func,
     getAllSelectedItemIndexes: PropTypes.func,
     attributes: PropTypes.any
 };
