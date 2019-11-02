@@ -7,6 +7,10 @@ The main benefit of this component is that it doesn't dictate to you how your UI
 Check out the ExampleApp for more info, it shows all possible use cases, including how to use this component to work as a Radio Button.
 
 ## What's New
+2.0 - Now supports default selections. Breaking change to how SelectionHandler is constructed. It now takes an object as its settings parameter.
+   
+Added ``onItemDeselected`` prop.
+
 1.2 - Deselection of an item is now possible, and is enabled by default. You can turn this behavior off by passing 'false' in as the second parameter to the SelectionHandler.
 
 1.1 - New prop, getAllSelectedItemIndexes, if provided multi-selection will return all elements that are selected. You can pull in a default definition of getAllSelectedItemIndexes from SelectionHandler.
@@ -14,11 +18,11 @@ Check out the ExampleApp for more info, it shows all possible use cases, includi
 ## Todo
 * More examples, more documentation. 
 * Add typescript definitions.
-* Default selection
 * Some crazy example showing off using the accelerometer for selecting a component.
+* Stop re-renderig things more often than needed.
 
 ## How to use
-1. Create a ``SelectionHandler``, preferably in a constructor. **The selection handler cannot change on each render, it must stick around**
+1. Create a ``SelectionHandler``  **The selection handler cannot change on each render, it must stick around**
 2. Write a function that returns the component you want to render, that component needs some sort of way to be selected/activated. TouchableOpacity is a good start, but feel free to go wild. 
     * The function signature is ``renderComponent(data, index, isSelected, onPress)``. 
         * ``data`` will be the contents of ``items[index]``, ``items`` is passed into SelectionGroup (see below) 
@@ -37,10 +41,13 @@ const arrayOfChoices = ['First option', 'Second option', 'Third option']
   isSelected={this.selectionHandler.isSelected}
   containerStyle={styles.answers}
   onItemSelected={(item) => this.setState({ selectedAnswer: item })}
+  onItemDeselected={(item, selectedItems) => this.setState({selectedAnswer: null})}
 />
 ```
 
 onItemSelected is called whenever the user's selection changes. You probably want to keep track of this, but if you don't care too much about code clarity, you can also do that in your renderContent function by triggering off of ``isSelected``.
+
+onItemDeselected is called whenever an item is deselected. If you have set ``maxMultiSelect`` to greater than 1 in your ``selectionHandler`` then selectedItems will be whatever items, if any, are still selected. ``maxMultiSelect`` is 1 then selectedItems will be null.
 
 ## Advanced Usage
 Multi-select support also exists. See [MultiselectScreen.js](https://github.com/devlinb/react-native-selection-group/blob/master/ExampleApp/screens/MultiselectScreen.js) for an example.
